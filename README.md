@@ -1,4 +1,4 @@
-# Sistema-de-Gesti-n-de-Libros-electr-nicos
+# Sistema-de-Gestion-de-Libros-electronicos
 ¡Bienvenido a Libroteca. Este es un sistema de gestión de libros electrónicos desarrollado en **Go**, diseñado para demostrar el poder de la **programación funcional** aplicada a la organización de contenidos digitales, utilizando como base títulos icónicos del manga japonés.
 
 ## 🚀 Objetivo del Proyecto
