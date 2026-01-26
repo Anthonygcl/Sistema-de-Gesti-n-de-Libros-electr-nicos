@@ -1,3 +1,5 @@
+package main
+
 import (
 	"AP1/internal/logic"
 	"AP1/internal/models"
