@@ -1,22 +1,39 @@
 package models
 
-// Libro representa la estructura de un e-book
+import (
+	"errors"
+	"fmt"
+)
+
+// Libro con campos privados (Encapsulación)
 type Libro struct {
-	ID      int
-	Titulo  string // Usaremos nombres de mangas
-	Autor   string
-	Paginas int
-	Formato string
-	Estado  string
+	id      int
+	titulo  string
+	autor   string
+	paginas int
+	formato string
 }
 
-// ObtenerInventario carga los libros iniciales
-func ObtenerInventario() []Libro {
-	return []Libro{
-		{1, "Berserk: Deluxe Edition", "Kentaro Miura", 700, "PDF", "Leído"},
-		{2, "One Piece: Saga de Wano", "Eiichiro Oda", 200, "EPUB", "Pendiente"},
-		{3, "Oyasumi Punpun: Vol 1", "Inio Asano", 150, "PDF", "Descargado"},
-		{4, "Vagabond: VizBig Edition", "Takehiko Inoue", 600, "MOBI", "Leído"},
-		{5, "Akira: 35th Anniversary", "Katsuhiro Otomo", 350, "PDF", "Pendiente"},
+// NuevoLibro es el constructor con manejo de errores
+func NuevoLibro(id int, titulo string, autor string, paginas int, formato string) (*Libro, error) {
+	if paginas <= 0 {
+		return nil, errors.New("el libro debe tener al menos 1 página")
 	}
+	if titulo == "" {
+		return nil, errors.New("el título no puede estar vacío")
+	}
+	return &Libro{id, titulo, autor, paginas, formato}, nil
 }
+
+// MÉTODOS GETTERS (Para que otros paquetes puedan leer los datos)
+func (l *Libro) Titulo() string  { return l.titulo }
+func (l *Libro) Autor() string   { return l.autor }
+func (l *Libro) Paginas() int    { return l.paginas }
+func (l *Libro) Formato() string { return l.formato }
+
+// ObtenerDetalles implementa la interfaz Gestionable
+func (l *Libro) ObtenerDetalles() string {
+	return fmt.Sprintf("[%s] %s - %d pág. (%s)", l.autor, l.titulo, l.paginas, l.formato)
+}
+
+
