@@ -2,19 +2,22 @@ package logic
 
 import (
 	"AP1/internal/interfaces"
-	"errors"
+	"sync"
 )
 
-// Biblioteca actúa como nuestra "Clase" administradora
 type Biblioteca struct {
+	mu    sync.RWMutex // Mutex para seguridad en Servicios Web
 	Items []interfaces.Gestionable
 }
 
-// AgregarItem usa Polimorfismo: recibe cualquier objeto que sea Gestionable
-func (b *Biblioteca) AgregarItem(item interfaces.Gestionable) error {
-	if item == nil {
-		return errors.New("no se puede agregar un item vacío")
-	}
+func (b *Biblioteca) AgregarItem(item interfaces.Gestionable) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
 	b.Items = append(b.Items, item)
-	return nil
+}
+
+func (b *Biblioteca) ObtenerItems() []interfaces.Gestionable {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	return b.Items
 }
